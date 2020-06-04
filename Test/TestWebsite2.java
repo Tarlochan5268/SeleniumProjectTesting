@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static junit.framework.TestCase.assertTrue;
@@ -50,6 +51,20 @@ public class TestWebsite2 {
 
     @Test
     public void testAllCheckBoxFieldChecked() throws InterruptedException  {
-
+        //first click button to check all boxes -> text turn to uncheck all
+        WebElement button = driver.findElement(By.id("check1"));
+        button.click();
+        //check all check boxes checked
+        //so we get a list of all check box
+        List<WebElement> checkboxes = driver.findElements(By.className("cb1-element"));
+        //check all checkbox checked
+        for (int i = 0; i < checkboxes.size(); i++) {
+            WebElement checkbox = checkboxes.get(i);
+            boolean isChecked = checkbox.isSelected();
+            assertTrue(isChecked);
+        }
+        //check value of the button should be uncheck all if all checkbox is selected
+        String buttonText = button.getAttribute("value");
+        assertEquals("Uncheck All", buttonText);
     }
 }
